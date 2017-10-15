@@ -99,6 +99,16 @@ EOF" if build_desc["sudo"] and @options[:allow_sudo]
     end
   end
 
+  if build_desc["multiarch"]
+    info "Adding multiarch support (log in var/install.log)"
+    for a in build_desc["multiarch"]
+      system! "on-target -u root dpkg --add-architecture #{a} > var/install.log 2>&1"
+    end
+  end
+
+  info "Updating apt-get repository (log in var/install.log)"
+  system! "on-target -u root apt-get update > var/install.log 2>&1"
+
   info "Installing additional packages (log in var/install.log)"
   system! "on-target sudo apt-get --no-install-recommends -y install #{build_desc["packages"].join(" ")}"
 
