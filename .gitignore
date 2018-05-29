@@ -12,3 +12,5 @@ sigs
 target-bin/bootstrap-fixup
 .vagrant
 cache
+docker
+*.Dockerfile
